@@ -5,7 +5,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-      MYSQL_DATABASE: spring_security_demo
     ports:
       - "3307:3306"
   app:
