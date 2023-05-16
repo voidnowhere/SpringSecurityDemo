@@ -1,15 +1,30 @@
 version: '3'
 services:
-  db:
+  mysql:
     image: mysql
+    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: ""
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
     ports:
-      - "3307:3306"
+      - "3306:3306"
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ""
+    ports:
+      - "9000:80"
   app:
     build: .
+    container_name: app
     ports:
-      - '8000:8080'
+      - "8000:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/spring_security_demo
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
     depends_on:
-      - db
+      - mysql
